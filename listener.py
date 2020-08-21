@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 
 import rospy
-import time
 from std_msgs.msg import String
+import json
 
 
-def callback(info):
-	rospy.loginfo(info.data)
-	print "I heard ", info.data
+def callback(info):										#function triggered when message is received
+	#rospy.loginfo(info.data)									
+	object_info = json.loads(info.data)
+	#print temp['cube']['Blue']							#for testing
 
 def listen_pose():
-	rospy.Subscriber("packobject", String, callback)
-	rospy.spin()
+	rospy.Subscriber("ObjectInfo", String, callback)	#subscribe to topic object info
 
 if __name__ == '__main__':
     try:
-        rospy.init_node("Listen", anonymous=True)	#might no leave this here - initialise node in main?
+        rospy.init_node("Listen", anonymous=True)		#planner node already created so no need for this line
 	print("Initialising listen node")
 	
 	while True:
